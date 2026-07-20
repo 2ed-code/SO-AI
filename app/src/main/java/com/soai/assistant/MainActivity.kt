@@ -3,9 +3,8 @@ package com.soai.assistant
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import com.soai.assistant.ui.home.HomeScreen
+import com.soai.assistant.ui.theme.SOAITheme
 
 class MainActivity : ComponentActivity() {
 
@@ -13,27 +12,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SOAIApp()
-        }
-    }
-}
 
-@Composable
-fun SOAIApp() {
-    MaterialTheme {
-
-        Surface {
-
-            Text(
-                text = "🤖 SO AI\n\nمساعدك الشخصي جاهز",
-            )
+            SOAITheme {
+                HomeScreen()
+            }
 
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewSOAI() {
-    SOAIApp()
 }
