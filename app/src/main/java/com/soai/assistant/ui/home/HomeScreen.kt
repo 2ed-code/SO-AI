@@ -1,11 +1,14 @@
 package com.soai.assistant.ui.home
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.soai.assistant.ui.components.SOGlassCard
+import com.soai.assistant.ui.components.SOOrb
 
 @Composable
 fun HomeScreen() {
@@ -19,26 +22,20 @@ fun HomeScreen() {
     ) {
 
         Text(
-            text = "🤖 SO AI",
+            text = "SO AI",
             style = MaterialTheme.typography.headlineLarge
         )
 
-        Spacer(
-            modifier = Modifier.height(20.dp)
-        )
+        Spacer(Modifier.height(18.dp))
 
-        Text(
-            text = "مساعدك الشخصي جاهز"
-        )
+        SOOrb()
 
-        Spacer(
-            modifier = Modifier.height(40.dp)
-        )
+        Spacer(Modifier.height(36.dp))
 
-        Button(
-            onClick = {}
-        ) {
-            Text("🎤 تحدث مع SO")
+        SOGlassCard {
+            Text(
+                text = "جاهز للمساعدة"
+            )
         }
     }
 }
