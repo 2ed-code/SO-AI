@@ -11,24 +11,41 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun SOGlassCard(
     modifier: Modifier = Modifier,
-    padding: PaddingValues = PaddingValues(20.dp),
+    padding: PaddingValues = PaddingValues(24.dp),
     content: @Composable () -> Unit
 ) {
+
+    val shape = RoundedCornerShape(28.dp)
+
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(24.dp))
-            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.95f))
+            .shadow(
+                elevation = 24.dp,
+                shape = shape,
+                clip = false
+            )
+            .clip(shape)
+            .background(
+                Brush.verticalGradient(
+                    listOf(
+                        Color.White.copy(alpha = 0.10f),
+                        Color.White.copy(alpha = 0.04f)
+                    )
+                )
+            )
             .border(
                 1.dp,
-                Color.White.copy(alpha = 0.08f),
-                RoundedCornerShape(24.dp)
+                Color.White.copy(alpha = 0.12f),
+                shape
             )
             .padding(padding)
     ) {
