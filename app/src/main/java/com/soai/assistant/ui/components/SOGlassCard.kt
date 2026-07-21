@@ -17,19 +17,17 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SOGlassCard(
     modifier: Modifier = Modifier,
-    padding: PaddingValues = PaddingValues(18.dp),
+    padding: PaddingValues = PaddingValues(20.dp),
     content: @Composable () -> Unit
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(24.dp))
-            .background(
-                MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
-            )
+            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.95f))
             .border(
                 1.dp,
-                Color.White.copy(alpha = 0.06f),
+                Color.White.copy(alpha = 0.08f),
                 RoundedCornerShape(24.dp)
             )
             .padding(padding)
