@@ -58,7 +58,17 @@ fun HomeScreen() {
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                         Column(modifier = Modifier.weight(1f)) {
                             Text("SO Chat", color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Bold)
-                            Text("Stay close to your people", color = Muted, fontSize = 13.sp)
+                            Text(
+                                when (selectedTab) {
+                                    "Friends" -> "People you know"
+                                    "Groups" -> "Your group conversations"
+                                    "Calls" -> "Recent and missed calls"
+                                    "Notifications" -> "Your latest activity"
+                                    "Profile" -> "Your account and status"
+                                    else -> "Stay close to your people"
+                                },
+                                color = Muted, fontSize = 13.sp
+                            )
                         }
                         Box {
                             Text(
@@ -80,48 +90,64 @@ fun HomeScreen() {
                         }
                     }
                     Spacer(Modifier.height(22.dp))
-                    OutlinedTextField(
-                        value = search, onValueChange = { search = it },
-                        modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text("Search messages and friends", color = Muted) },
-                        leadingIcon = { Text("⌕", color = Muted, fontSize = 23.sp) },
-                        singleLine = true,
-                        shape = RoundedCornerShape(18.dp),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White, unfocusedTextColor = Color.White,
-                            focusedBorderColor = Accent, unfocusedBorderColor = Color(0xFF30303A),
-                            cursorColor = Accent
-                        )
-                    )
-                    Spacer(Modifier.height(18.dp))
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        listOf("Messages", "Friends", "Groups").forEach { tab ->
-                            FilterChip(
-                                selected = selectedTab == tab,
-                                onClick = { selectedTab = tab },
-                                label = { Text(tab) },
-                                colors = FilterChipDefaults.filterChipColors(
-                                    selectedContainerColor = Accent,
-                                    selectedLabelColor = Color.White,
-                                    labelColor = Muted
+                    when (selectedTab) {
+                        "Profile" -> {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth().padding(top = 28.dp)) {
+                                Avatar("S", status == "Online", 92)
+                                Spacer(Modifier.height(14.dp))
+                                Text("Your profile", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                                Text("@yourusername", color = Muted)
+                                Spacer(Modifier.height(20.dp))
+                                Text("Edit profile and privacy settings will be available here.", color = Muted)
+                            }
+                        }
+                        "Calls" -> SimpleStateList("Calls", listOf("No calls yet"))
+                        "Notifications" -> SimpleStateList("Notifications", listOf("Friend requests", "Mentions", "Messages", "System alerts"))
+                        else -> {
+                            OutlinedTextField(
+                                value = search, onValueChange = { search = it },
+                                modifier = Modifier.fillMaxWidth(),
+                                placeholder = { Text("Search messages and friends", color = Muted) },
+                                leadingIcon = { Text("⌕", color = Muted, fontSize = 23.sp) },
+                                singleLine = true,
+                                shape = RoundedCornerShape(18.dp),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedTextColor = Color.White, unfocusedTextColor = Color.White,
+                                    focusedBorderColor = Accent, unfocusedBorderColor = Color(0xFF30303A),
+                                    cursorColor = Accent
                                 )
                             )
-                        }
-                        Spacer(Modifier.weight(1f))
-                        FilledTonalButton(onClick = { selectedTab = "New chat" }) { Text("+") }
-                    }
-                    Spacer(Modifier.height(8.dp))
-                    when (selectedTab) {
-                        "Friends" -> SimpleStateList("Friends", listOf("Lora", "Ahmed", "Sarah", "Omar"))
-                        "Groups" -> SimpleStateList("Groups", listOf("Dev Team", "Weekend plans", "Family"))
-                        "New chat" -> SimpleStateList("Start a conversation", listOf("Lora", "Ahmed", "Sarah", "Omar"))
-                        else -> {
-                            val filtered = sampleChats.filter {
-                                it.name.contains(search, ignoreCase = true) || it.message.contains(search, ignoreCase = true)
+                            Spacer(Modifier.height(18.dp))
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                listOf("Messages", "Friends", "Groups").forEach { tab ->
+                                    FilterChip(
+                                        selected = selectedTab == tab,
+                                        onClick = { selectedTab = tab },
+                                        label = { Text(tab) },
+                                        colors = FilterChipDefaults.filterChipColors(
+                                            selectedContainerColor = Accent,
+                                            selectedLabelColor = Color.White,
+                                            labelColor = Muted
+                                        )
+                                    )
+                                }
+                                Spacer(Modifier.weight(1f))
+                                FilledTonalButton(onClick = { selectedTab = "New chat" }) { Text("+") }
                             }
-                            LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                                items(filtered) { chat ->
-                                    ChatRow(chat = chat, onClick = { openedChat = chat })
+                            Spacer(Modifier.height(8.dp))
+                            when (selectedTab) {
+                                "Friends" -> SimpleStateList("Friends", listOf("Lora", "Ahmed", "Sarah", "Omar"))
+                                "Groups" -> SimpleStateList("Groups", listOf("Dev Team", "Weekend plans", "Family"))
+                                "New chat" -> SimpleStateList("Start a conversation", listOf("Lora", "Ahmed", "Sarah", "Omar"))
+                                else -> {
+                                    val filtered = sampleChats.filter {
+                                        it.name.contains(search, ignoreCase = true) || it.message.contains(search, ignoreCase = true)
+                                    }
+                                    LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                        items(filtered) { chat ->
+                                            ChatRow(chat = chat, onClick = { openedChat = chat })
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -143,7 +169,7 @@ fun HomeScreen() {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text("Your conversation with ${chat.name}", color = Color.White, fontWeight = FontWeight.Medium)
                             Spacer(Modifier.height(8.dp))
-                            Text("Connect a messaging server to send real messages.", color = Muted, fontSize = 12.sp)
+                            Text("Live messaging is not connected yet.", color = Muted, fontSize = 12.sp)
                         }
                     }
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -156,7 +182,7 @@ fun HomeScreen() {
                                 focusedBorderColor = Accent, unfocusedBorderColor = Color(0xFF30303A)
                             )
                         )
-                        Button(onClick = { /* UI only until a messaging backend is connected */ }, shape = CircleShape,
+                        Button(onClick = { /* Connect to messaging backend before sending */ }, shape = CircleShape,
                             colors = ButtonDefaults.buttonColors(containerColor = Accent)) { Text("➤") }
                     }
                 }
@@ -173,9 +199,9 @@ fun HomeScreen() {
                     listOf("Messages" to "▤", "Calls" to "☎", "Notifications" to "♧", "Profile" to "●").forEach { (tab, glyph) ->
                         Column(horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier.clip(RoundedCornerShape(16.dp))
-                                .clickable { if (tab == "Profile") selectedTab = "Profile" else selectedTab = tab }
+                                .clickable { selectedTab = tab }
                                 .padding(horizontal = 10.dp, vertical = 4.dp)) {
-                            Text(glyph, color = if (selectedTab == tab || (tab == "Messages" && selectedTab == "Messages")) Accent else Muted, fontSize = 20.sp)
+                            Text(glyph, color = if (selectedTab == tab) Accent else Muted, fontSize = 20.sp)
                             Text(tab, color = if (selectedTab == tab) Color.White else Muted, fontSize = 10.sp)
                         }
                     }
