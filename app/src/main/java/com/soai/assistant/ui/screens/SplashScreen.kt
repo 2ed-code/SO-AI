@@ -1,54 +1,34 @@
 package com.soai.assistant.ui.screens
 
-import androidx.compose.animation.core.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.soai.assistant.ui.components.SOOrb
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(
-    onFinish: () -> Unit
-) {
-
-    val alpha by rememberInfiniteTransition(label = "")
-        .animateFloat(
-            initialValue = 0.4f,
-            targetValue = 1f,
-            animationSpec = infiniteRepeatable(
-                tween(1500),
-                RepeatMode.Reverse
-            ),
-            label = ""
-        )
-
+fun SplashScreen(onFinish: () -> Unit) {
+    LaunchedEffect(Unit) {
+        delay(700)
+        onFinish()
+    }
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(Color(0xFF09090D)),
         contentAlignment = Alignment.Center
     ) {
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            SOOrb()
-
-            Spacer(
-                modifier = Modifier.height(40.dp)
-            )
-
-            Text(
-                text = "SO AI",
-                style = MaterialTheme.typography.headlineLarge
-            )
-
-            Text(
-                text = "Smart Assistant",
-                style = MaterialTheme.typography.bodyLarge
-            )
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text("SO", color = Color(0xFF6A5CFF), fontSize = 54.sp, fontWeight = FontWeight.Black)
+            Text("CHAT", color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Bold)
+            Spacer(Modifier.height(8.dp))
+            Text("Your people, your conversations", color = Color(0xFF9A9AA8), style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
