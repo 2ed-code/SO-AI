@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isConversationMember() {
+      return signedIn()
+        && request.auth.uid in resource.data.memberIds;
+    }
+
+    match /conversations/{conversationId} {
+      allow read: if isConversationMember();
+      allow create: if signedIn()
+        && request.resource.data.memberIds is list
+        && request.auth.uid in request.resource.data.memberIds
+        && request.resource.data.memberIds.size() == 2;
+      allow update: if isConversationMember()
+        && request.resource.data.memberIds == resource.data.memberIds;
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        function parentConversationExists() {
+          return exists(/databases/$(database)/documents/conversations/$(conversationId));
+        }
+        function parentHasCurrentUser() {
+          return signedIn()
+            && request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.memberIds;
+        }
+
+        allow read: if parentConversationExists() && parentHasCurrentUser();
+        allow create: if parentConversationExists()
+          && parentHasCurrentUser()
+          && request.resource.data.senderId == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 5000;
+        allow update, delete: if false;
+      }
+    }
+  }
+}
