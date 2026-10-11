@@ -29,3 +29,27 @@ Open the project in a compatible Android Studio installation and run the Gradle 
 5. Add voice/video calling only after the core messaging flow is stable.
 
 Do not commit API secrets, signing keys, or private credentials to the repository.
+
+
+## Firebase setup for real accounts and chat
+
+The app includes Firebase Authentication and Cloud Firestore repository code. A Firebase project is not bundled with this repository, so the app intentionally shows a setup screen until project configuration is added.
+
+1. Create a Firebase project in the Firebase Console.
+2. Register an Android app with package name `com.soai.assistant`.
+3. Enable **Authentication → Email/Password**.
+4. Create a **Cloud Firestore** database.
+5. Download `google-services.json` and place it at `app/google-services.json`. Do not commit project credentials to a public repository.
+6. Publish the rules in `firestore.rules` to the Firestore database. Review and test the rules before production.
+7. Push the branch again; the Google Services Gradle plugin is applied only when the config file exists.
+
+### Implemented Firebase code
+
+- Email/password account creation and sign-in.
+- Firestore conversation and message repositories with real-time snapshot listeners.
+- A conversation screen that reads and sends messages.
+- DataStore persistence helpers for primary and secondary profile colors.
+
+### Current integration status
+
+The authentication screen is wired into startup when Firebase configuration is present. The existing main conversation list is still a demo list and is not yet connected to the Firestore conversation repository; direct-conversation discovery/contact search and account profile records remain follow-up integration work. Never deploy Firestore with permissive test rules.
