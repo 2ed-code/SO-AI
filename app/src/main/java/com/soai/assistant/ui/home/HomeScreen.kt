@@ -57,7 +57,7 @@ fun HomeScreen() {
                 if (openedChat == null) {
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                         Column(modifier = Modifier.weight(1f)) {
-                            Text("SO Chat", color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Bold)
+                            Text("207200", color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Bold)
                             Text(
                                 when (selectedTab) {
                                     "Friends" -> "People you know"
