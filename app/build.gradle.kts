@@ -46,3 +46,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.9.0")
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 }
+
+// Firebase config is supplied per developer project; keep CI builds working without private config.
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+}
