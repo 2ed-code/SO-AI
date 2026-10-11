@@ -16,7 +16,7 @@ private val SOChatColors = darkColorScheme(
 )
 
 @Composable
-fun SOAITheme(content: @Composable () -> Unit) {
+fun SOChatTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = SOChatColors,
         content = content
