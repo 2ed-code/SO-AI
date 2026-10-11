@@ -1,18 +1,18 @@
-name: Build SO AI APK
+name: Build 207200 APK
 
 on:
   push:
     branches:
       - main
+      - feature/so-chat-conversion
+  pull_request:
+    branches:
+      - main
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -20,13 +20,17 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'temurin'
+          distribution: temurin
 
-      - name: Build APK
-        run: ./gradlew assembleDebug
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+
+      - name: Build debug APK
+        run: ./gradlew --no-daemon assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: SO-AI-debug
+          name: 207200-debug
           path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
