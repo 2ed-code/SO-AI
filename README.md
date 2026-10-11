@@ -1,4 +1,4 @@
-# SO Chat
+# 207200
 
 SO Chat is an Android chat-app UI prototype built with Kotlin and Jetpack Compose. The project is being transitioned away from the former AI-assistant concept.
 
