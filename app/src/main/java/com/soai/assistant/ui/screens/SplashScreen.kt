@@ -25,8 +25,7 @@ fun SplashScreen(onFinish: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("SO", color = Color(0xFF6A5CFF), fontSize = 54.sp, fontWeight = FontWeight.Black)
-            Text("CHAT", color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Bold)
+            Text("207200", color = Color(0xFF6A5CFF), fontSize = 44.sp, fontWeight = FontWeight.Black)
             Spacer(Modifier.height(8.dp))
             Text("Your people, your conversations", color = Color(0xFF9A9AA8), style = MaterialTheme.typography.bodyMedium)
         }
