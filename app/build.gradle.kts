@@ -38,4 +38,11 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.navigation:navigation-compose:2.9.8")
     debugImplementation("androidx.compose.ui:ui-tooling")
+
+    // Firebase services for account management and real-time chat.
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.9.0")
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 }
